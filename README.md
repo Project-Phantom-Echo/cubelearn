@@ -1,3 +1,10 @@
+## Local HAR experiment: partial reproduction
+
+This fork preserves the HAR adaptation, constructor fixes, and completed local
+experiments. **We did not reproduce the paper's HAR accuracies at 30 epochs.**
+[Setup and replay](SETUP-HAR.md) · [Protocol and limitations](notes.md) ·
+[All retained results](results/har_reproduction.md).
+
 # CubeLearn
 This is the official repository for paper 
 

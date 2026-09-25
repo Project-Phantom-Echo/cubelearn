@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+
+# Run artefacts: weights, caches and logs stay local. results/*.json is kept -
+# it holds the reported accuracies.
+*.pt
+*.pth
+logs/
+cache/
+.venv/
+.pytest_cache/
+data/

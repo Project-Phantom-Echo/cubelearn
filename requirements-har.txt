@@ -1,0 +1,4 @@
+# Python 3.11. Install the CUDA 12.1 torch wheel as described in SETUP-HAR.md.
+torch==2.1.1
+numpy==1.26.4
+cplxmodule==2022.6

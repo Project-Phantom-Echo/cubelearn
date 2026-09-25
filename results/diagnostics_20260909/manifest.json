@@ -1,0 +1,27 @@
+{
+  "job_id": "252689",
+  "python": "/mnt/weka/fgeikyan/rf-perception-papers/compass/.venv/bin/python",
+  "configs": [
+    [
+      1,
+      32
+    ],
+    [
+      2,
+      32
+    ],
+    [
+      0,
+      8
+    ]
+  ],
+  "source_sha256": {
+    "network_har.py": "6857fec923597143128200d49afe35c9f5ccb75e9e4b465844d9ab6d073b32ca",
+    "network.py": "13ab2fe69b3e98148f825873d190cb01308ebfa05f594097c0f31c05d12e8ceb",
+    "har_dataset.py": "a1b2939cd4b8a5d8e00d5a45c51e80d3105ab99b7bf1552f2c58f6fda123c3dc",
+    "train_har.py": "6d7521c51e99370f9db4a75c7f5c549ffc00f6d829b7e87df12d05478660ea00",
+    "dataset_split/validation_samples.csv": "dafb45d5ecd5c0cdedc2cbf37222b781a2574c8d75caf5f462ebb30d1f1775e3",
+    "dataset_split/test_samples.csv": "2569c151694ecd45d11075e0e14fc95b7f9e1138f92f3267b5f586710e047f98",
+    "dataset_split/train_samples.csv": "f313b0abfd8f020161b56223b0660aa0deca8107aba24ee78a1e9cd31203b065"
+  }
+}

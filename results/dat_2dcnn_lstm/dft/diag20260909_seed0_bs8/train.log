@@ -1,0 +1,54 @@
+model=dat_2dcnn_lstm  arm=DFT (frozen)  seed=0  device=cuda:0
+  train       540 samples
+  val         180 samples
+  test_in     360 samples
+  test_out    360 samples
+  params: 2726302 classifier + 41984 transform
+[  1/30] train 0.1593 (1.7939)  val 0.3333 (1.6626) *saved  13s
+[  2/30] train 0.3259 (1.4230)  val 0.4278 (1.2088) *saved  22s
+[  3/30] train 0.4019 (1.2206)  val 0.5000 (1.1199) *saved  30s
+[  4/30] train 0.4296 (1.1559)  val 0.5333 (1.0616) *saved  36s
+[  5/30] train 0.4093 (1.1912)  val 0.3944 (1.1395)  42s
+[  6/30] train 0.4130 (1.1999)  val 0.5000 (1.0621)  50s
+[  7/30] train 0.4926 (1.0988)  val 0.4722 (1.0273)  59s
+[  8/30] train 0.4907 (1.0444)  val 0.6333 (0.9146) *saved  65s
+[  9/30] train 0.5333 (0.9769)  val 0.4500 (1.1063)  70s
+[ 10/30] train 0.5426 (1.0156)  val 0.5611 (0.9502)  77s
+[ 11/30] train 0.6000 (0.8880)  val 0.6556 (0.8740) *saved  83s
+[ 12/30] train 0.5926 (0.8674)  val 0.6056 (0.8539)  90s
+[ 13/30] train 0.6296 (0.8109)  val 0.7000 (0.7594) *saved  99s
+[ 14/30] train 0.6796 (0.7461)  val 0.7167 (0.6418) *saved  106s
+[ 15/30] train 0.7074 (0.6235)  val 0.7333 (0.5751) *saved  113s
+[ 16/30] train 0.7426 (0.5633)  val 0.7722 (0.4866) *saved  120s
+[ 17/30] train 0.7037 (0.5957)  val 0.7500 (0.6019)  127s
+[ 18/30] train 0.7852 (0.4491)  val 0.7500 (0.5756)  134s
+[ 19/30] train 0.8167 (0.4401)  val 0.8389 (0.3569) *saved  140s
+[ 20/30] train 0.7593 (0.5305)  val 0.8333 (0.3745)  148s
+[ 21/30] train 0.8278 (0.3820)  val 0.8056 (0.4224)  156s
+[ 22/30] train 0.8204 (0.3989)  val 0.7944 (0.4795)  163s
+[ 23/30] train 0.8333 (0.4372)  val 0.7333 (0.5786)  172s
+[ 24/30] train 0.8278 (0.4085)  val 0.8611 (0.3220) *saved  178s
+[ 25/30] train 0.8648 (0.3438)  val 0.8833 (0.2904) *saved  184s
+[ 26/30] train 0.8981 (0.2685)  val 0.9111 (0.2618) *saved  190s
+[ 27/30] train 0.8722 (0.2854)  val 0.8833 (0.2849)  199s
+[ 28/30] train 0.8907 (0.2665)  val 0.8833 (0.3062)  208s
+[ 29/30] train 0.8426 (0.3349)  val 0.8611 (0.3876)  213s
+[ 30/30] train 0.8648 (0.2651)  val 0.8889 (0.2643)  219s
+
+best epoch 26, val acc 0.9111
+test_in   acc 91.11%  loss 0.2891
+     98.33%  marching on the spot
+    100.00%  jogging on the spot
+     71.67%  clapping
+     80.00%  waving right hand
+    100.00%  sweeping the floor with right hand
+     96.67%  rubbing left arm with right hand
+test_out  acc 74.44%  loss 0.7959
+    100.00%  marching on the spot
+     53.33%  jogging on the spot
+     93.33%  clapping
+     46.67%  waving right hand
+     53.33%  sweeping the floor with right hand
+    100.00%  rubbing left arm with right hand
+
+wrote /mnt/weka/fgeikyan/rf-perception-papers/cubelearn/results/dat_2dcnn_lstm/dft/diag20260909_seed0_bs8/results.json

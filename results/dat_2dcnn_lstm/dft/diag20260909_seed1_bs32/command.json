@@ -1,0 +1,19 @@
+[
+  "/mnt/weka/fgeikyan/rf-perception-papers/compass/.venv/bin/python",
+  "-u",
+  "/mnt/weka/fgeikyan/rf-perception-papers/cubelearn/results/diagnostics_20260909/source/train_har.py",
+  "--lpp-lr",
+  "0",
+  "--epochs",
+  "30",
+  "--batch-size",
+  "32",
+  "--seed",
+  "1",
+  "--workers",
+  "8",
+  "--split-dir",
+  "/mnt/weka/fgeikyan/rf-perception-papers/cubelearn/results/diagnostics_20260909/source/dataset_split",
+  "--output-dir",
+  "/mnt/weka/fgeikyan/rf-perception-papers/cubelearn/results/dat_2dcnn_lstm/dft/diag20260909_seed1_bs32"
+]
