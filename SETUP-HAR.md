@@ -79,3 +79,6 @@ campaign. `--report-only` rewrites only its summary, if explicitly requested.
 The implementation and setup fixes do not explain the accuracy gap. The recorded
 seed and batch experiments show sensitivity; exact author HAR hyperparameters
 and participant identities remain unverified.
+Author correspondence and the proposed separate windowing experiment are
+consolidated in [notes.md](notes.md). The commands above replay the historical
+20-frame recipe; they do not implement the proposed windowing experiments.
