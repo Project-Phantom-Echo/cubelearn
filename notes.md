@@ -17,34 +17,19 @@ The author's mean ± SD values are transcribed from his email.
 | Our author-config run | 99.28 ± 0.42 | 99.89 ± 0.15 | 86.11 ± 3.74 | 90.22 ± 5.40 |
 | Paper values supplied by author | 98.8 | 99.5 | 87.1 | 91.3 |
 
-**Our four-seed supplementary result (remove only the worst held-out seed per
-method):** DFT retains **1, 2, 3, 4**, excluding seed **0** (81.6667% held-out).
-CubeLearn retains **0, 1, 3, 4**, excluding seed **2** (83.8889% held-out).
-The same retained seeds are used for both seen and held-out summaries.
+**Our individual seed results (%)**, with all five seeds included in the main
+summary. Values are rounded to four decimals from the retained test records.
 
-| Model | Retained seeds | Seen mean ± sample SD (%) | Held-out mean ± sample SD (%) |
-|---|---|---:|---:|
-| DFT | 1, 2, 3, 4 | 99.4444 ± 0.2268 | 87.2222 ± 3.2315 |
-| CubeLearn | 0, 1, 3, 4 | 99.9306 ± 0.1389 | 91.8056 ± 4.7059 |
+| Seed | DFT seen | CubeLearn seen | DFT held-out | CubeLearn held-out |
+|---|---:|---:|---:|---:|
+| 0 | 98.6111 | 100.0000 | 81.6667 | 92.7778 |
+| 1 | 99.1667 | 100.0000 | 82.7778 | 85.5556 |
+| 2 | 99.7222 | 99.7222 | 89.1667 | 83.8889 |
+| 3 | 99.4444 | 100.0000 | 86.9444 | 96.9444 |
+| 4 | 99.4444 | 99.7222 | 90.0000 | 91.9444 |
 
-Individual retained values (percentages, rounded to four decimals):
-
-| Model | Seed | Seen | Held-out |
-|---|---:|---:|---:|
-| DFT | 1 | 99.1667 | 82.7778 |
-| DFT | 2 | 99.7222 | 89.1667 |
-| DFT | 3 | 99.4444 | 86.9444 |
-| DFT | 4 | 99.4444 | 90.0000 |
-| CubeLearn | 0 | 100.0000 | 92.7778 |
-| CubeLearn | 1 | 100.0000 | 85.5556 |
-| CubeLearn | 3 | 100.0000 | 96.9444 |
-| CubeLearn | 4 | 99.7222 | 91.9444 |
-
-These are post-hoc selected four-seed results; the main table above retains all
-five seeds. The author did not provide a four-seed table: his supplementary
-analysis removed both best and worst, leaving three. His exact four-seed means
-and SDs cannot be reconstructed from the rounded aggregates and partial per-seed
-information in his email.
+The author did not supply his complete per-seed results. His main mean ± SD
+includes all five seeds; we use that comparison, not his supplementary trimming.
 
 Our held-out mean is 0.67 points below his rerun for DFT and 0.72 below for
 CubeLearn. CubeLearn's advantage is +4.11 points locally versus +4.16 in his rerun.
@@ -123,43 +108,53 @@ independently verified those values against the final IEEE version.
    the cause has not been isolated. It must not be treated as resolved merely
    by attributing it to hardware.
 
-## Seed removal: supplementary, not the missing ingredient
+## Hyperparameters: author configuration versus our experiments
 
-The author reported **all five seeds first**, including a CubeLearn seed-1
-held-out result of 81.67%, which he described as an outlier. He then suggested
-removing **both the best and worst run separately for each method**. That leaves
-three seeds, not four: DFT seeds 1,2,3 and CubeLearn seeds 0,2,3. His trimmed
-held-out means were 87.78% DFT and 92.59% CubeLearn (seen: 99.35% / 99.91%).
+All rows below use full 20-frame samples. Classifier LR is the constant rate or
+WSD peak rate; complex LR applies to CubeLearn and is always **0 for DFT**.
+Each accuracy is held-out test mean ± sample SD (%), using every seed in the row.
+A single-seed result has no SD. Checkpoints use best validation accuracy, then
+validation loss. Epochs specify the selection budget, not necessarily the selected epoch.
 
-We separately explored dropping only the worst of our earlier three-seed runs.
-For example, the original constant-10×, 100-epoch comparison changed from
-87.04% / 89.44% to 87.50% / 92.36% held-out. This is a different, optimistically
-selected statistic and is not the primary reproduction result.
+| Experiment | Batch | Epochs | Classifier LR | Complex LR | Schedule / dropout | Seeds | DFT held-out | CubeLearn held-out |
+|---|---:|---:|---:|---:|---|---|---:|---:|
+| Historical baseline | 32 | 30 | 0.0003 | 0.0001 | Constant / 0 | 0,1,2 | 71.85 ± 9.63 | 77.31 ± 9.82 |
+| Historical baseline | 8 | 30 | 0.0003 | 0.0001 | Constant / 0 | 0 | 74.44 | 86.94 |
+| Both LRs increased | 32 | 30 | 0.0015 | 0.0005 | Constant / 0 | 0,1,2 | 79.72 ± 9.14 | 82.69 ± 10.04 |
+| Both LRs increased | 32 | 30 | 0.0030 | 0.0010 | Constant / 0 | 0,1,2 | 83.15 ± 3.69 | 83.06 ± 4.59 |
+| Classifier-only LR | 32 | 100 | 0.0015 | 0.0001 | Constant / 0 | 0,1,2 | 85.93 ± 6.30 | 85.28 ± 8.01 |
+| Classifier-only LR | 32 | 100 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 87.04 ± 1.60 | 89.44 ± 5.14 |
+| Classifier-only LR | 32 | 100 | 0.0015 | 0.0001 | WSD / 0 | 0,1,2 | 85.65 ± 2.63 | 85.00 ± 6.50 |
+| Classifier-only LR | 32 | 100 | 0.0030 | 0.0001 | WSD / 0 | 0,1,2 | 90.37 ± 3.95 | 89.54 ± 1.05 |
+| Fresh 200-epoch run, evaluated through 100 | 32 | 100 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 85.65 ± 6.25 | 91.57 ± 2.92 |
+| Longer training | 32 | 200 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 85.93 ± 6.35 | 91.39 ± 3.38 |
+| Dropout follow-up | 32 | 100 | 0.0030 | 0.0001 | WSD / 0.2 | 0,1,2 | 88.43 ± 0.16 | 88.98 ± 5.14 |
+| Dropout follow-up | 32 | 100 | 0.0030 | 0.0001 | WSD / 0.5 | 0,1,2 | 92.78 ± 1.21 | 91.11 ± 2.89 |
+| **Our author-config run** | 8 | 60 | 0.0003 | 0.0010 | Constant / 0 | 0,1,2,3,4 | 86.11 ± 3.74 | 90.22 ± 5.40 |
+| **Author's rerun** | **8** | **60** | **0.0003** | **0.0010** | Not specified | 0,1,2,3,4 | **86.78 ± 5.25** | **90.94 ± 5.47** |
 
-Applying his best-and-worst trimming to our latest five-seed run retains DFT
-seeds 1,2,3 and CubeLearn seeds 0,1,4, giving 86.30% / 90.09% held-out
-(seen: 99.44% / 99.91%). Our lowest CubeLearn run is seed 2, not his seed 1.
-A low score alone does not establish a faulty run. We retain all five seeds in
-our primary report. **Seed removal was not the missing ingredient:** our
-untrimmed advantage already closely matches his untrimmed advantage. His new
-hyperparameter combination was the previously untried recipe that worked here.
+**What worked:** the author-config run closely matches both his DFT and CubeLearn
+means and their gap, using five seeds. Unlike our earlier classifier-only grid,
+it keeps classifier LR at 0.0003 and raises complex LR to 0.001, with batch 8
+and 60 epochs. Those factors changed together, so we cannot attribute success
+to one factor alone.
 
-## Selected full-sample follow-up results
+**Higher accuracy versus matching the comparison:** our fresh constant-10×
+100-epoch checkpoint reached CubeLearn 91.57%, but the earlier nominally equivalent
+100-epoch runs reached 89.44%; repeatability remains unresolved. Dropout 0.5
+reached CubeLearn 91.11%, but DFT reached 92.78%, reversing the paper ranking.
+Extending the fresh constant-rate runs from 100 to 200 epochs did not improve
+CubeLearn's mean. Thus the largest CubeLearn number alone is not the criterion
+for matching the reported DFT/CubeLearn comparison.
 
-Held-out test mean ± sample SD (%), seeds 0–2, best validation checkpoint through
-stated budget. All rows below use batch 32. These exploratory test comparisons
-informed later experiments; they are not an untouched confirmatory test.
-
-| Setting | DFT | CubeLearn |
-|---|---:|---:|
-| Constant classifier 5×, 100 epochs | 85.93 ± 6.30 | 85.28 ± 8.01 |
-| Constant classifier 10×, original 100-epoch runs | 87.04 ± 1.60 | 89.44 ± 5.14 |
-| WSD classifier 5×, 100 epochs | 85.65 ± 2.63 | 85.00 ± 6.50 |
-| WSD classifier 10×, 100 epochs | 90.37 ± 3.95 | 89.54 ± 1.05 |
-| Constant classifier 10×, 100-epoch checkpoint of fresh 200-epoch runs | 85.65 ± 6.25 | 91.57 ± 2.92 |
-| Constant classifier 10×, 200 epochs | 85.93 ± 6.35 | 91.39 ± 3.38 |
-| WSD classifier 10×, dropout 0.2, 100 epochs | 88.43 ± 0.16 | 88.98 ± 5.14 |
-| WSD classifier 10×, dropout 0.5, 100 epochs | 92.78 ± 1.21 | 91.11 ± 2.89 |
+WSD here means classifier warmup for epochs 1–5, constant through epoch 80,
+and linear decay to 10% through epoch 100; complex LR stays fixed. Dropout is
+applied after the activated 128-dimensional classifier hidden layer.
+The author specified neither a scheduler nor dropout in his successful-config
+email; our matching run uses neither. Earlier 50-epoch checkpoint comparisons
+and baseline 180-epoch trials are retained in their campaign records and the
+conversation summary above. These were exploratory tests, with different seed
+counts and budgets, not controlled evidence that one hyperparameter alone is better.
 
 Final five-seed records and frozen sources are also retained in this fork under
 [`results/author_config_20261007`](results/author_config_20261007/). Commands and
@@ -199,7 +194,7 @@ for a fresh replay. Checkpoints and data remain external.
 
 ## Setup and replay
 
-## Environment
+### Environment
 
 Use Python 3.11. The historical runs used an H100, PyTorch 2.1.1+cu121 and
 cplxmodule 2022.6. The NumPy pin matches the available validated environment;
