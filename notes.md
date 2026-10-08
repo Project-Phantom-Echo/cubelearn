@@ -13,9 +13,38 @@ The author's mean ± SD values are transcribed from his email.
 
 | Source | DFT seen | CubeLearn seen | DFT held-out | CubeLearn held-out |
 |---|---:|---:|---:|---:|
+| Author's rerun | 99.28 ± 0.50 | 99.83 ± 0.15 | 86.78 ± 5.25 | 90.94 ± 5.47 |
 | Our author-config run | 99.28 ± 0.42 | 99.89 ± 0.15 | 86.11 ± 3.74 | 90.22 ± 5.40 |
-| Author's new rerun | 99.28 ± 0.50 | 99.83 ± 0.15 | 86.78 ± 5.25 | 90.94 ± 5.47 |
 | Paper values supplied by author | 98.8 | 99.5 | 87.1 | 91.3 |
+
+**Our four-seed supplementary result (remove only the worst held-out seed per
+method):** DFT retains **1, 2, 3, 4**, excluding seed **0** (81.6667% held-out).
+CubeLearn retains **0, 1, 3, 4**, excluding seed **2** (83.8889% held-out).
+The same retained seeds are used for both seen and held-out summaries.
+
+| Model | Retained seeds | Seen mean ± sample SD (%) | Held-out mean ± sample SD (%) |
+|---|---|---:|---:|
+| DFT | 1, 2, 3, 4 | 99.4444 ± 0.2268 | 87.2222 ± 3.2315 |
+| CubeLearn | 0, 1, 3, 4 | 99.9306 ± 0.1389 | 91.8056 ± 4.7059 |
+
+Individual retained values (percentages, rounded to four decimals):
+
+| Model | Seed | Seen | Held-out |
+|---|---:|---:|---:|
+| DFT | 1 | 99.1667 | 82.7778 |
+| DFT | 2 | 99.7222 | 89.1667 |
+| DFT | 3 | 99.4444 | 86.9444 |
+| DFT | 4 | 99.4444 | 90.0000 |
+| CubeLearn | 0 | 100.0000 | 92.7778 |
+| CubeLearn | 1 | 100.0000 | 85.5556 |
+| CubeLearn | 3 | 100.0000 | 96.9444 |
+| CubeLearn | 4 | 99.7222 | 91.9444 |
+
+These are post-hoc selected four-seed results; the main table above retains all
+five seeds. The author did not provide a four-seed table: his supplementary
+analysis removed both best and worst, leaving three. His exact four-seed means
+and SDs cannot be reconstructed from the rounded aggregates and partial per-seed
+information in his email.
 
 Our held-out mean is 0.67 points below his rerun for DFT and 0.72 below for
 CubeLearn. CubeLearn's advantage is +4.11 points locally versus +4.16 in his rerun.
