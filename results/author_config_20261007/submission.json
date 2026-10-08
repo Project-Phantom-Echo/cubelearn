@@ -1,0 +1,18 @@
+{
+  "job_id": "316374",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--partition=research",
+    "--job-name=cubelearn-author",
+    "--gres=gpu:h100:1",
+    "--cpus-per-task=4",
+    "--mem=32G",
+    "--time=01:00:00",
+    "--array=0-9",
+    "--output=/mnt/weka/fgeikyan/rf-perception-papers/cubelearn-author-20261007-a/slurm/%A_%a.out",
+    "--error=/mnt/weka/fgeikyan/rf-perception-papers/cubelearn-author-20261007-a/slurm/%A_%a.err",
+    "/mnt/weka/fgeikyan/rf-perception-papers/cubelearn-author-20261007-a/job.sh",
+    "/mnt/weka/fgeikyan/rf-perception-papers/cubelearn-author-20261007-a"
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "tasks": [
+    {
+      "name": "dft_seed0",
+      "seed": 0,
+      "arm": "dft",
+      "lr": 0.0003,
+      "lpp_lr": 0,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "cubelearn_seed0",
+      "seed": 0,
+      "arm": "cubelearn",
+      "lr": 0.0003,
+      "lpp_lr": 0.001,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "dft_seed1",
+      "seed": 1,
+      "arm": "dft",
+      "lr": 0.0003,
+      "lpp_lr": 0,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "cubelearn_seed1",
+      "seed": 1,
+      "arm": "cubelearn",
+      "lr": 0.0003,
+      "lpp_lr": 0.001,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "dft_seed2",
+      "seed": 2,
+      "arm": "dft",
+      "lr": 0.0003,
+      "lpp_lr": 0,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "cubelearn_seed2",
+      "seed": 2,
+      "arm": "cubelearn",
+      "lr": 0.0003,
+      "lpp_lr": 0.001,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "dft_seed3",
+      "seed": 3,
+      "arm": "dft",
+      "lr": 0.0003,
+      "lpp_lr": 0,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "cubelearn_seed3",
+      "seed": 3,
+      "arm": "cubelearn",
+      "lr": 0.0003,
+      "lpp_lr": 0.001,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "dft_seed4",
+      "seed": 4,
+      "arm": "dft",
+      "lr": 0.0003,
+      "lpp_lr": 0,
+      "epochs": 60,
+      "batch_size": 8
+    },
+    {
+      "name": "cubelearn_seed4",
+      "seed": 4,
+      "arm": "cubelearn",
+      "lr": 0.0003,
+      "lpp_lr": 0.001,
+      "epochs": 60,
+      "batch_size": 8
+    }
+  ],
+  "frames": 20,
+  "overlap": 0,
+  "epochs": 60,
+  "batch_size": 8,
+  "selection": "sample-level validation accuracy, then validation loss",
+  "test": "one prediction per original 20-frame sample; best validation checkpoint",
+  "lr_provenance": "Author email supplied by user 2026-10-07: classifier .0003, CubeLearn lpp .001, DFT lpp 0.",
+  "paper": "https://doi.org/10.1109/JIOT.2023.3237494",
+  "limitations": "Author provided batch size/epochs/LRs/seeds. Same full-20-frame local sample split retained; exact split, checkpoint selection and scheduler not specified in this latest email. Best sample-level validation accuracy then loss; no scheduler or added dropout. Hardware/CuDNN may affect same-seed outcomes.",
+  "sha256": {
+    "source/network.py": "13ab2fe69b3e98148f825873d190cb01308ebfa05f594097c0f31c05d12e8ceb",
+    "source/train_har.py": "dd6d0cc9de7acd9d1052f939e2c8ae3626a4a927fd180a6e4536ab8912812239",
+    "source/network_har.py": "98683b1ba4089d539419c8a1285a0ad6e879045c94747199ccbdf258ad8cdff7",
+    "source/har_dataset.py": "41107b0b2626f2b05209ffc34588cd756f192a05aa0d7540ca12a542c0214751",
+    "source/dataset_split/validation_samples.csv": "dafb45d5ecd5c0cdedc2cbf37222b781a2574c8d75caf5f462ebb30d1f1775e3",
+    "source/dataset_split/train_samples.csv": "f313b0abfd8f020161b56223b0660aa0deca8107aba24ee78a1e9cd31203b065",
+    "source/dataset_split/test_samples.csv": "2569c151694ecd45d11075e0e14fc95b7f9e1138f92f3267b5f586710e047f98",
+    "driver.py": "6ac41e0a489ea77754b48d3a3f77720e5122e97e1b466a045872e4d6b22923d1",
+    "job.sh": "9b0bd39dbba51c9266752513dc2ca35c2acbb2d24b92ea3a31ea191d9849cdc1"
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "scheduler": "none; constant learning rates",
+  "source_campaign": "/mnt/weka/fgeikyan/rf-perception-papers/cubelearn-lr-grid-20261001-a",
+  "author_results": {
+    "dft": {
+      "seen_mean": 99.28,
+      "seen_sd": 0.5,
+      "heldout_mean": 86.78,
+      "heldout_sd": 5.25
+    },
+    "cubelearn": {
+      "seen_mean": 99.83,
+      "seen_sd": 0.15,
+      "heldout_mean": 90.94,
+      "heldout_sd": 5.47
+    }
+  },
+  "paper_values_author_supplied": {
+    "dft": {
+      "seen": 98.8,
+      "heldout": 87.1
+    },
+    "cubelearn": {
+      "seen": 99.5,
+      "heldout": 91.3
+    }
+  },
+  "analysis": "Primary results include all five seeds; report mean and sample SD, no outlier removal."
+}

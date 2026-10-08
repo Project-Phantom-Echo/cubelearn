@@ -1,13 +1,4 @@
-## Local HAR experiment: partial reproduction
-
-This fork preserves the HAR adaptation, constructor fixes, and completed local
-experiments. **We did not reproduce the paper's HAR accuracies at 30 epochs.**
-[Setup and replay](SETUP-HAR.md) · [Consolidated results, author discussion, and next steps](notes.md) ·
-[All retained results](results/har_reproduction.md).
-
-The 2026-09-30 documentation checkpoint includes the authors' recollections
-about sliding windows and multi-seed averaging. Windowing experiments are
-planned; the ten retained runs use the original local, one-file-per-sample loader.
+Local HAR reproduction: [results, author discussion, and setup](notes.md).
 
 # CubeLearn
 This is the official repository for paper 
