@@ -1,6 +1,57 @@
 # CubeLearn HAR reproduction and author discussion
 
-## Hyperparameters: author configuration versus our experiments
+## Headline results
+
+The author's new configuration closely reproduces his five-seed results locally.
+It recovers CubeLearn's held-out advantage with **all five seeds included**.
+Accuracy (%); our uncertainty is sample standard deviation across seeds 0–4.
+The author's mean ± SD values are transcribed from his email.
+
+| Source | DFT seen | CubeLearn seen | DFT held-out | CubeLearn held-out |
+|---|---:|---:|---:|---:|
+| Author's rerun | 99.28 ± 0.50 | 99.83 ± 0.15 | 86.78 ± 5.25 | 90.94 ± 5.47 |
+| Our author-config run | 99.28 ± 0.42 | 99.89 ± 0.15 | 86.11 ± 3.74 | 90.22 ± 5.40 |
+| Paper values supplied by author | 98.8 | 99.5 | 87.1 | 91.3 |
+
+**Configuration:** full 20-frame samples, batch 8, 60 epochs, classifier LR
+0.0003; CubeLearn complex LR 0.001, DFT complex layers frozen. Constant LR,
+no dropout; best sample-level validation checkpoint; all five seeds retained.
+
+**Measured runtime on one H100 per job** (training plus evaluation and job
+startup, excluding queue wait):
+
+| Model | Per-seed job range | Mean job time | Total across five jobs |
+| --- | ---: | ---: | ---: |
+| DFT | 5m 41s–7m 36s | 6m 46s | 33m 50s |
+| CubeLearn | 5m 50s–9m 25s | 7m 29s | 37m 24s |
+
+All ten jobs completed successfully. These are allocation runtimes, not a claim
+that the entire campaign finished within the longest individual job.
+[Per-seed timing records](results/author_config_20261007/runtimes.json).
+
+**Our individual seed results (%)**, with all five seeds included in the main
+summary. Values are rounded to four decimals from the retained test records.
+
+| Seed | DFT seen | CubeLearn seen | DFT held-out | CubeLearn held-out |
+|---|---:|---:|---:|---:|
+| 0 | 98.6111 | 100.0000 | 81.6667 | 92.7778 |
+| 1 | 99.1667 | 100.0000 | 82.7778 | 85.5556 |
+| 2 | 99.7222 | 99.7222 | 89.1667 | 83.8889 |
+| 3 | 99.4444 | 100.0000 | 86.9444 | 96.9444 |
+| 4 | 99.4444 | 99.7222 | 90.0000 | 91.9444 |
+
+The author did not supply his complete per-seed results. His main mean ± SD
+includes all five seeds; we use that comparison, not his supplementary trimming.
+
+Our held-out mean is 0.67 points below his rerun for DFT and 0.72 below for
+CubeLearn. CubeLearn's advantage is +4.11 points locally versus +4.16 in his rerun.
+This is close agreement with the author's rerun, not proof of identical original
+paper protocol: the HAR subject assignment and his checkpoint rule remain unconfirmed.
+Our earlier approximate chart readings (98.8/99.4 seen, 86.9/91.1 held-out) are
+superseded for comparisons by the author-supplied paper values above. We have not
+independently verified those values against the final IEEE version.
+
+## Supporting experiments and hyperparameters
 
 All rows below use full 20-frame samples. Classifier LR is the constant rate or
 WSD peak rate; complex LR applies to CubeLearn and is always **0 for DFT**.
@@ -45,47 +96,8 @@ applied after the activated 128-dimensional classifier hidden layer.
 The author specified neither a scheduler nor dropout in his successful-config
 email; our matching run uses neither. Earlier 50-epoch checkpoint comparisons
 and baseline 180-epoch trials are retained in their campaign records and the
-conversation summary above. These were exploratory tests, with different seed
+author-discussion summary below. These were exploratory tests, with different seed
 counts and budgets, not controlled evidence that one hyperparameter alone is better.
-
-Updated 2026-10-08. This consolidates the author correspondence supplied by Filya
-and our completed experiments. Author recollections, his new rerun, and our own
-measurements are distinguished below. Scope: D-A-T 2D CNN–LSTM HAR only.
-
-## Current result
-
-The author's new configuration closely reproduces his five-seed results locally.
-It recovers CubeLearn's held-out advantage with **all five seeds included**.
-Accuracy (%); our uncertainty is sample standard deviation across seeds 0–4.
-The author's mean ± SD values are transcribed from his email.
-
-| Source | DFT seen | CubeLearn seen | DFT held-out | CubeLearn held-out |
-|---|---:|---:|---:|---:|
-| Author's rerun | 99.28 ± 0.50 | 99.83 ± 0.15 | 86.78 ± 5.25 | 90.94 ± 5.47 |
-| Our author-config run | 99.28 ± 0.42 | 99.89 ± 0.15 | 86.11 ± 3.74 | 90.22 ± 5.40 |
-| Paper values supplied by author | 98.8 | 99.5 | 87.1 | 91.3 |
-
-**Our individual seed results (%)**, with all five seeds included in the main
-summary. Values are rounded to four decimals from the retained test records.
-
-| Seed | DFT seen | CubeLearn seen | DFT held-out | CubeLearn held-out |
-|---|---:|---:|---:|---:|
-| 0 | 98.6111 | 100.0000 | 81.6667 | 92.7778 |
-| 1 | 99.1667 | 100.0000 | 82.7778 | 85.5556 |
-| 2 | 99.7222 | 99.7222 | 89.1667 | 83.8889 |
-| 3 | 99.4444 | 100.0000 | 86.9444 | 96.9444 |
-| 4 | 99.4444 | 99.7222 | 90.0000 | 91.9444 |
-
-The author did not supply his complete per-seed results. His main mean ± SD
-includes all five seeds; we use that comparison, not his supplementary trimming.
-
-Our held-out mean is 0.67 points below his rerun for DFT and 0.72 below for
-CubeLearn. CubeLearn's advantage is +4.11 points locally versus +4.16 in his rerun.
-This is close agreement with the author's rerun, not proof of identical original
-paper protocol: the HAR subject assignment and his checkpoint rule remain unconfirmed.
-Our earlier approximate chart readings (98.8/99.4 seen, 86.9/91.1 held-out) are
-superseded for comparisons by the author-supplied paper values above. We have not
-independently verified those values against the final IEEE version.
 
 ## What the author suggested and what we tried
 

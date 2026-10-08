@@ -1,0 +1,75 @@
+{
+  "source": "Slurm sacct, queried 2026-10-08; elapsed allocation time excludes queue wait",
+  "runs": [
+    {
+      "job_id": "316374_0",
+      "model": "dft",
+      "seed": 0,
+      "state": "COMPLETED",
+      "elapsed_seconds": 456
+    },
+    {
+      "job_id": "316374_1",
+      "model": "cubelearn",
+      "seed": 0,
+      "state": "COMPLETED",
+      "elapsed_seconds": 456
+    },
+    {
+      "job_id": "316374_2",
+      "model": "dft",
+      "seed": 1,
+      "state": "COMPLETED",
+      "elapsed_seconds": 450
+    },
+    {
+      "job_id": "316374_3",
+      "model": "cubelearn",
+      "seed": 1,
+      "state": "COMPLETED",
+      "elapsed_seconds": 442
+    },
+    {
+      "job_id": "316374_4",
+      "model": "dft",
+      "seed": 2,
+      "state": "COMPLETED",
+      "elapsed_seconds": 439
+    },
+    {
+      "job_id": "316374_5",
+      "model": "cubelearn",
+      "seed": 2,
+      "state": "COMPLETED",
+      "elapsed_seconds": 431
+    },
+    {
+      "job_id": "316374_6",
+      "model": "dft",
+      "seed": 3,
+      "state": "COMPLETED",
+      "elapsed_seconds": 341
+    },
+    {
+      "job_id": "316374_7",
+      "model": "cubelearn",
+      "seed": 3,
+      "state": "COMPLETED",
+      "elapsed_seconds": 350
+    },
+    {
+      "job_id": "316374_8",
+      "model": "dft",
+      "seed": 4,
+      "state": "COMPLETED",
+      "elapsed_seconds": 344
+    },
+    {
+      "job_id": "316374_9",
+      "model": "cubelearn",
+      "seed": 4,
+      "state": "COMPLETED",
+      "elapsed_seconds": 565
+    }
+  ]
+}
