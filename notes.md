@@ -1,5 +1,53 @@
 # CubeLearn HAR reproduction and author discussion
 
+## Hyperparameters: author configuration versus our experiments
+
+All rows below use full 20-frame samples. Classifier LR is the constant rate or
+WSD peak rate; complex LR applies to CubeLearn and is always **0 for DFT**.
+Each accuracy is held-out test mean ± sample SD (%), using every seed in the row.
+A single-seed result has no SD. Checkpoints use best validation accuracy, then
+validation loss. Epochs specify the selection budget, not necessarily the selected epoch.
+
+| Experiment | Batch | Epochs | Classifier LR | Complex LR | Schedule / dropout | Seeds | DFT held-out | CubeLearn held-out |
+|---|---:|---:|---:|---:|---|---|---:|---:|
+| Historical baseline | 32 | 30 | 0.0003 | 0.0001 | Constant / 0 | 0,1,2 | 71.85 ± 9.63 | 77.31 ± 9.82 |
+| Historical baseline | 8 | 30 | 0.0003 | 0.0001 | Constant / 0 | 0 | 74.44 | 86.94 |
+| Both LRs increased | 32 | 30 | 0.0015 | 0.0005 | Constant / 0 | 0,1,2 | 79.72 ± 9.14 | 82.69 ± 10.04 |
+| Both LRs increased | 32 | 30 | 0.0030 | 0.0010 | Constant / 0 | 0,1,2 | 83.15 ± 3.69 | 83.06 ± 4.59 |
+| Classifier-only LR | 32 | 100 | 0.0015 | 0.0001 | Constant / 0 | 0,1,2 | 85.93 ± 6.30 | 85.28 ± 8.01 |
+| Classifier-only LR | 32 | 100 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 87.04 ± 1.60 | 89.44 ± 5.14 |
+| Classifier-only LR | 32 | 100 | 0.0015 | 0.0001 | WSD / 0 | 0,1,2 | 85.65 ± 2.63 | 85.00 ± 6.50 |
+| Classifier-only LR | 32 | 100 | 0.0030 | 0.0001 | WSD / 0 | 0,1,2 | 90.37 ± 3.95 | 89.54 ± 1.05 |
+| Fresh 200-epoch run, evaluated through 100 | 32 | 100 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 85.65 ± 6.25 | 91.57 ± 2.92 |
+| Longer training | 32 | 200 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 85.93 ± 6.35 | 91.39 ± 3.38 |
+| Dropout follow-up | 32 | 100 | 0.0030 | 0.0001 | WSD / 0.2 | 0,1,2 | 88.43 ± 0.16 | 88.98 ± 5.14 |
+| Dropout follow-up | 32 | 100 | 0.0030 | 0.0001 | WSD / 0.5 | 0,1,2 | 92.78 ± 1.21 | 91.11 ± 2.89 |
+| **Our author-config run** | 8 | 60 | 0.0003 | 0.0010 | Constant / 0 | 0,1,2,3,4 | 86.11 ± 3.74 | 90.22 ± 5.40 |
+| **Author's rerun** | **8** | **60** | **0.0003** | **0.0010** | Not specified | 0,1,2,3,4 | **86.78 ± 5.25** | **90.94 ± 5.47** |
+
+**What worked:** the author-config run closely matches both his DFT and CubeLearn
+means and their gap, using five seeds. Unlike our earlier classifier-only grid,
+it keeps classifier LR at 0.0003 and raises complex LR to 0.001, with batch 8
+and 60 epochs. Those factors changed together, so we cannot attribute success
+to one factor alone.
+
+**Higher accuracy versus matching the comparison:** our fresh constant-10×
+100-epoch checkpoint reached CubeLearn 91.57%, but the earlier nominally equivalent
+100-epoch runs reached 89.44%; repeatability remains unresolved. Dropout 0.5
+reached CubeLearn 91.11%, but DFT reached 92.78%, reversing the paper ranking.
+Extending the fresh constant-rate runs from 100 to 200 epochs did not improve
+CubeLearn's mean. Thus the largest CubeLearn number alone is not the criterion
+for matching the reported DFT/CubeLearn comparison.
+
+WSD here means classifier warmup for epochs 1–5, constant through epoch 80,
+and linear decay to 10% through epoch 100; complex LR stays fixed. Dropout is
+applied after the activated 128-dimensional classifier hidden layer.
+The author specified neither a scheduler nor dropout in his successful-config
+email; our matching run uses neither. Earlier 50-epoch checkpoint comparisons
+and baseline 180-epoch trials are retained in their campaign records and the
+conversation summary above. These were exploratory tests, with different seed
+counts and budgets, not controlled evidence that one hyperparameter alone is better.
+
 Updated 2026-10-08. This consolidates the author correspondence supplied by Filya
 and our completed experiments. Author recollections, his new rerun, and our own
 measurements are distinguished below. Scope: D-A-T 2D CNN–LSTM HAR only.
@@ -107,54 +155,6 @@ independently verified those values against the final IEEE version.
    observed differing same-seed results across fresh nominally equivalent runs;
    the cause has not been isolated. It must not be treated as resolved merely
    by attributing it to hardware.
-
-## Hyperparameters: author configuration versus our experiments
-
-All rows below use full 20-frame samples. Classifier LR is the constant rate or
-WSD peak rate; complex LR applies to CubeLearn and is always **0 for DFT**.
-Each accuracy is held-out test mean ± sample SD (%), using every seed in the row.
-A single-seed result has no SD. Checkpoints use best validation accuracy, then
-validation loss. Epochs specify the selection budget, not necessarily the selected epoch.
-
-| Experiment | Batch | Epochs | Classifier LR | Complex LR | Schedule / dropout | Seeds | DFT held-out | CubeLearn held-out |
-|---|---:|---:|---:|---:|---|---|---:|---:|
-| Historical baseline | 32 | 30 | 0.0003 | 0.0001 | Constant / 0 | 0,1,2 | 71.85 ± 9.63 | 77.31 ± 9.82 |
-| Historical baseline | 8 | 30 | 0.0003 | 0.0001 | Constant / 0 | 0 | 74.44 | 86.94 |
-| Both LRs increased | 32 | 30 | 0.0015 | 0.0005 | Constant / 0 | 0,1,2 | 79.72 ± 9.14 | 82.69 ± 10.04 |
-| Both LRs increased | 32 | 30 | 0.0030 | 0.0010 | Constant / 0 | 0,1,2 | 83.15 ± 3.69 | 83.06 ± 4.59 |
-| Classifier-only LR | 32 | 100 | 0.0015 | 0.0001 | Constant / 0 | 0,1,2 | 85.93 ± 6.30 | 85.28 ± 8.01 |
-| Classifier-only LR | 32 | 100 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 87.04 ± 1.60 | 89.44 ± 5.14 |
-| Classifier-only LR | 32 | 100 | 0.0015 | 0.0001 | WSD / 0 | 0,1,2 | 85.65 ± 2.63 | 85.00 ± 6.50 |
-| Classifier-only LR | 32 | 100 | 0.0030 | 0.0001 | WSD / 0 | 0,1,2 | 90.37 ± 3.95 | 89.54 ± 1.05 |
-| Fresh 200-epoch run, evaluated through 100 | 32 | 100 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 85.65 ± 6.25 | 91.57 ± 2.92 |
-| Longer training | 32 | 200 | 0.0030 | 0.0001 | Constant / 0 | 0,1,2 | 85.93 ± 6.35 | 91.39 ± 3.38 |
-| Dropout follow-up | 32 | 100 | 0.0030 | 0.0001 | WSD / 0.2 | 0,1,2 | 88.43 ± 0.16 | 88.98 ± 5.14 |
-| Dropout follow-up | 32 | 100 | 0.0030 | 0.0001 | WSD / 0.5 | 0,1,2 | 92.78 ± 1.21 | 91.11 ± 2.89 |
-| **Our author-config run** | 8 | 60 | 0.0003 | 0.0010 | Constant / 0 | 0,1,2,3,4 | 86.11 ± 3.74 | 90.22 ± 5.40 |
-| **Author's rerun** | **8** | **60** | **0.0003** | **0.0010** | Not specified | 0,1,2,3,4 | **86.78 ± 5.25** | **90.94 ± 5.47** |
-
-**What worked:** the author-config run closely matches both his DFT and CubeLearn
-means and their gap, using five seeds. Unlike our earlier classifier-only grid,
-it keeps classifier LR at 0.0003 and raises complex LR to 0.001, with batch 8
-and 60 epochs. Those factors changed together, so we cannot attribute success
-to one factor alone.
-
-**Higher accuracy versus matching the comparison:** our fresh constant-10×
-100-epoch checkpoint reached CubeLearn 91.57%, but the earlier nominally equivalent
-100-epoch runs reached 89.44%; repeatability remains unresolved. Dropout 0.5
-reached CubeLearn 91.11%, but DFT reached 92.78%, reversing the paper ranking.
-Extending the fresh constant-rate runs from 100 to 200 epochs did not improve
-CubeLearn's mean. Thus the largest CubeLearn number alone is not the criterion
-for matching the reported DFT/CubeLearn comparison.
-
-WSD here means classifier warmup for epochs 1–5, constant through epoch 80,
-and linear decay to 10% through epoch 100; complex LR stays fixed. Dropout is
-applied after the activated 128-dimensional classifier hidden layer.
-The author specified neither a scheduler nor dropout in his successful-config
-email; our matching run uses neither. Earlier 50-epoch checkpoint comparisons
-and baseline 180-epoch trials are retained in their campaign records and the
-conversation summary above. These were exploratory tests, with different seed
-counts and budgets, not controlled evidence that one hyperparameter alone is better.
 
 Final five-seed records and frozen sources are also retained in this fork under
 [`results/author_config_20261007`](results/author_config_20261007/). Commands and
