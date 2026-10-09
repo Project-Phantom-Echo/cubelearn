@@ -189,7 +189,7 @@ for a fresh replay. Checkpoints and data remain external.
   Counts: 540 train, 180 validation, 360 seen test, 360 held-out test.
 - Original data: 1,440 samples, 8 users × 6 actions × 30 repetitions. Cache
   retains eight horizontal channels; model uses first 64 chirps/128 ADC samples.
-  Cache: `/mnt/weka/fgeikyan/cubelearn_data/har_cache`.
+  Cache: `/mnt/weka/fgeikyan/rf-datas/cubelearn/har_cache`. The archive is in the same parent folder. Since 2026-10-09, `/mnt/weka/fgeikyan/cubelearn_data` is a compatibility link for historical runs; the ignored local `data` link points to this folder, so existing default launchers still work. You can also set `CUBELEARN_CACHE` to the new cache path for fresh jobs.
 - Latest frozen campaign: `../cubelearn-author-20261007-a`, Slurm array 316374.
   Manifest, source/split hashes, commands, environments, logs, checkpoint and
   per-seed `results.json` are retained there. Source hashes, completion,

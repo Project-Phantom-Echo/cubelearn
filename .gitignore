@@ -10,3 +10,4 @@ cache/
 .venv/
 .pytest_cache/
 data/
+/data
